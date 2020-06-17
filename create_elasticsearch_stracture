@@ -1,0 +1,75 @@
+-- Create an index template for the bigger table, it is better to be devided to indxes by time slices 
+
+curl -X PUT "localhost:9200/_template/big_table_index?pretty" -H 'Content-Type: application/json' -d'
+{
+  "index_patterns": ["big_table_*"],
+  "settings": {
+    "number_of_shards": 1
+  },
+  "mappings": {
+    "_source": {
+      "enabled": false
+    },
+    "properties": {
+      "big_table_join_field": {
+        "type": "long"
+      },
+      "additional_field": {
+        "type": "text"
+      },
+      "created_at": {
+        "type": "date",
+        "format": "EEE MMM dd HH:mm:ss Z yyyy"
+      }
+    }
+  }
+}
+'
+
+-- Create index for the smaller table
+
+curl -X PUT "localhost:9200/small_table_index?pretty" -H 'Content-Type: application/json' -d'
+{
+    "settings" : {
+        "number_of_shards" : 1
+    },
+    "mappings" : {
+        "properties" : {
+            "small_table_join_field" : { 
+              "type" : "long" 
+            },
+            "additional_field": {
+              "type": "text"
+            }
+        }
+    }
+}
+'
+
+
+-- Create index for join keys from both tables, the value key should have the type of the join filed, this is the tag that stores the actual value of the join filed 
+
+curl -X PUT "localhost:9200/join_keys_index?pretty" -H 'Content-Type: application/json' -d'
+{
+    "settings" : {
+        "number_of_shards" : 1
+    },
+    "mappings" : {
+        "properties" : {
+            "table_name" : { 
+              "type" : "keyword" 
+            },
+            "join_field_name": {
+              "type": "keyword"
+            },
+            "value": {
+              "type": "long"
+            },
+            "last_update": {
+              "type": "date",
+              "format": "EEE MMM dd HH:mm:ss Z yyyy"
+            }
+        }
+    }
+}
+'
