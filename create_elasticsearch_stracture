@@ -19,7 +19,7 @@ curl -X PUT "localhost:9200/_template/big_table_index?pretty" -H 'Content-Type: 
       },
       "created_at": {
         "type": "date",
-        "format": "EEE MMM dd HH:mm:ss Z yyyy"
+        "format": "dd/MMM/yyyy:HH:mm:ss Z"
       }
     }
   }
@@ -67,7 +67,7 @@ curl -X PUT "localhost:9200/join_keys_index?pretty" -H 'Content-Type: applicatio
             },
             "last_update": {
               "type": "date",
-              "format": "EEE MMM dd HH:mm:ss Z yyyy"
+              "format": "dd/MMM/yyyy:HH:mm:ss Z"
             }
         }
     }
