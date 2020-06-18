@@ -29,9 +29,7 @@ def left_join(left_table_name, left_table_join_key, right_table_name, right_tabl
 
 
 def inner_join(left_table_name, left_table_join_key, right_table_name, right_table_join_key):
-	es = Elasticsearch('127.0.0.1',
-        http_auth=('my_username', 'my_password'),
-        port=9200)
+	connect_elastic()
 
 	body_join_potential={"query": "aggs": {
       categories: {            
