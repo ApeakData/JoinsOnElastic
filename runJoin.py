@@ -8,7 +8,9 @@ import elasticsearch.helpers
 
 
 
+time_interval_in_minutes=24*60 
 
+timestamp_status='1970-01-01'
 
 
 def left_join(left_table_name, left_table_join_key, right_table_name, right_table_join_key, is_right_side_null):
